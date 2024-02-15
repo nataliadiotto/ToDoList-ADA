@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,6 +27,15 @@ public class ToDoItem {
     private LocalDate deadline;
 
     public ToDoItem(){
-        createdAt = LocalDateTime.now();
+        this.isCompleted = false;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public ToDoItem(String title, String description, LocalDate deadline) {
+        this.title = title;
+        this.description = description;
+        this.deadline = deadline;
+        this.isCompleted = false;
+        this.createdAt = LocalDateTime.now();
     }
 }
