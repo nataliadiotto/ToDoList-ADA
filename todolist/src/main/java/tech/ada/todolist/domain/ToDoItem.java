@@ -24,11 +24,13 @@ public class ToDoItem {
     private String description;
     private Boolean isCompleted;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private LocalDate deadline;
 
     public ToDoItem(){
         this.isCompleted = false;
         this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     public ToDoItem(String title, String description, LocalDate deadline) {
@@ -37,5 +39,6 @@ public class ToDoItem {
         this.deadline = deadline;
         this.isCompleted = false;
         this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 }

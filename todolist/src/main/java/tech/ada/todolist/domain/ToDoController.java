@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,6 +73,32 @@ public class ToDoController {
 
         } else {
             // Caso nao encontramos na valor no Optional retornamos o codigo 404 - nao encontrado
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+    @PutMapping("/todo-item/{id}")
+    public ResponseEntity<ToDoItem> update (@PathVariable Long id, @RequestBody ToDoItemUpdateRequest requestUpdate) throws Exception{
+        // Buscamos pelo metodo findById que retorna um Optional<TodoItem> pois o mesmo pode nao existir no banco
+        Optional<ToDoItem> optionalToDoItem = toDoItemRepository.findById(id);
+        // Verificamos se existe valor dentro do Optional
+        if(optionalToDoItem.isPresent()) {
+            // Se existir vamos fazer o get() para tirar o valor de dentro do optional
+            ToDoItem existentToDoItem = optionalToDoItem.get();
+
+            existentToDoItem.setTitle(requestUpdate.title());
+            existentToDoItem.setDescription(requestUpdate.description());
+            existentToDoItem.setIsCompleted(requestUpdate.isCompleted());
+            //existentToDoItem.setCreatedAt(requestUpdate.createdAt()); -> remover pois nao faz sentido alterar a data de criação
+            existentToDoItem.setUpdatedAt(LocalDateTime.now());
+            existentToDoItem.setDeadline(requestUpdate.deadline());
+
+            ToDoItem savedToDoItem = toDoItemRepository.save(existentToDoItem);
+
+            return ResponseEntity.ok(savedToDoItem);
+        }
+        else {
             return ResponseEntity.notFound().build();
         }
     }
