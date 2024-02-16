@@ -1,5 +1,6 @@
 package tech.ada.todolist.domain;
 
+import jakarta.websocket.server.PathParam;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,6 +52,20 @@ public class ToDoController {
         List<ToDoItem> listAll = toDoItemRepository.findAll();
         return listAll;
     }
+
+    @GetMapping(value = "/todo-item", params = {"title"}) //{id} + @PathVariable -> so se for filtrar pelo id,
+    // quando nao usarmos o identificador daquele recurso, mas sim outros atributos, temos que usar query parameter + @RequestParam
+    //usamos {} pois é um array, podemos usar mais de um atributo
+    public List<ToDoItem> findByFilter(@RequestParam String title){
+        List<ToDoItem> toDoItemListByFilter = toDoItemRepository.findByTitle(title);
+        return toDoItemListByFilter;
+
+        //url pra acessar no h2: localhost:8080/to.do-item?title=<titulo>
+    }
+
+
+
+
 
     @PatchMapping("/todo-item/{id}")
     public ResponseEntity<ToDoItem> changeStatus(

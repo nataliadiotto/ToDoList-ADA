@@ -7,18 +7,16 @@ import java.util.Objects;
 public record ToDoItemUpdateRequest(String title,
                                     String description,
                                     Boolean isCompleted,
-                                    LocalDateTime createdAt,
                                     //LocalDateTime updatedAt,
                                     LocalDate deadline
 ) {
 
     //checar se os atributos editados nao sao nulos
-    public ToDoItemUpdateRequest(String title, String description, Boolean isCompleted, LocalDateTime createdAt, LocalDate deadline) {
-        this.title = Objects.requireNonNull(title, "Titulo é obrigatorio");
-        this.description = Objects.requireNonNull(description);
-        this.isCompleted = Objects.requireNonNull(isCompleted);
-        this.createdAt = Objects.requireNonNull(createdAt);
-        this.deadline = Objects.requireNonNull(deadline);
+    public ToDoItemUpdateRequest(String title, String description, Boolean isCompleted, LocalDate deadline) {
+        this.title = Objects.requireNonNull(title, "Title is required");
+        this.description = Objects.requireNonNull(description, "Description is required");
+        this.isCompleted = Objects.requireNonNull(isCompleted, "isCompleted is required");
+        this.deadline = Objects.requireNonNull(deadline, "Deadline is required");
     }
 
  /*    public <T>T myNotNull(T objeto) {
