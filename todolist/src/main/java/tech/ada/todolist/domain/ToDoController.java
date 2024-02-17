@@ -64,7 +64,7 @@ public class ToDoController {
     }
 
 
-
+//implementar query manual
 
 
     @PatchMapping("/todo-item/{id}")
